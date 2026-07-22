@@ -1,0 +1,10 @@
+pid=823 graceful worker started
+starting work unit duration=5s
+progress second=1
+received SIGTERM; draining current work unit
+progress second=2
+progress second=3
+progress second=4
+progress second=5
+completed work unit
+shutdown complete after drain
