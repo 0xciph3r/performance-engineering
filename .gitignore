@@ -32,3 +32,10 @@ go.work.sum
 .vscode/
 plan.md
 .github/copilot-*
+
+# macOS
+.DS_Store
+
+# Build artifacts
+*.o
+*.cflags
