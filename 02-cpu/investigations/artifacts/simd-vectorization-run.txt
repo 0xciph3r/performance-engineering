@@ -1,0 +1,58 @@
+benchmark=simd-vectorization
+source=/Users/mac/Desktop/0xciph3r/performance-engineering/vectorization/homework3/loop.c
+hardware=Apple M1 Pro (10-core CPU, ARM NEON)
+compiler=Apple clang version 16.0.0 (clang-1600.0.26.6)
+trials_per_config=5
+loop_geometry=N=1024 I=100000 (element ops = I*N = 102400000)
+scalar_flags=-O3 -DNDEBUG -fno-vectorize
+vector_flags=-O3 -DNDEBUG -ffast-math
+
+op type scalar_best_ms scalar_avg_ms vector_best_ms vector_avg_ms speedup_x
++ uint32_t 41.616 41.79 11.02 11.18 3.78
+remark=vectorized
+loop.c:70:9: remark: vectorized loop (vectorization width: 4, interleaved count: 4) 
++ uint64_t 41.565 41.65 20.678 21.08 2.01
+remark=vectorized
+loop.c:70:9: remark: vectorized loop (vectorization width: 2, interleaved count: 4) 
++ float 39.379 39.64 10.944 11.04 3.60
+remark=vectorized
+loop.c:70:9: remark: vectorized loop (vectorization width: 4, interleaved count: 4) 
++ double 39.483 39.56 21.286 21.43 1.85
+remark=vectorized
+loop.c:70:9: remark: vectorized loop (vectorization width: 2, interleaved count: 4) 
+- uint32_t 41.71 41.77 10.921 10.97 3.82
+remark=vectorized
+loop.c:70:9: remark: vectorized loop (vectorization width: 4, interleaved count: 4) 
+- uint64_t 41.815 44.13 21.513 23.32 1.94
+remark=vectorized
+loop.c:70:9: remark: vectorized loop (vectorization width: 2, interleaved count: 4) 
+- float 39.404 40.62 10.939 12.13 3.60
+remark=vectorized
+loop.c:70:9: remark: vectorized loop (vectorization width: 4, interleaved count: 4) 
+- double 39.466 40.45 20.897 21.33 1.89
+remark=vectorized
+loop.c:70:9: remark: vectorized loop (vectorization width: 2, interleaved count: 4) 
+* uint32_t 39.466 39.71 11.004 12.06 3.59
+remark=vectorized
+loop.c:70:9: remark: vectorized loop (vectorization width: 4, interleaved count: 4) 
+* uint64_t 39.485 40.48 26.136 26.71 1.51
+remark=interleaved-only
+loop.c:70:9: remark: interleaved loop (interleaved count: 4) 
+* float 39.466 39.58 10.987 11.16 3.59
+remark=vectorized
+loop.c:70:9: remark: vectorized loop (vectorization width: 4, interleaved count: 4) 
+* double 39.474 40.24 21.35 22.34 1.85
+remark=vectorized
+loop.c:70:9: remark: vectorized loop (vectorization width: 2, interleaved count: 4) 
+/ uint32_t 76.832 77.22 78.47 84.23 0.98
+remark=interleaved-only
+loop.c:70:9: remark: interleaved loop (interleaved count: 4) 
+/ uint64_t 76.92 77.37 78.459 78.64 0.98
+remark=interleaved-only
+loop.c:70:9: remark: interleaved loop (interleaved count: 4) 
+/ float 39.425 39.49 11.062 11.47 3.56
+remark=vectorized
+loop.c:70:9: remark: vectorized loop (vectorization width: 4, interleaved count: 4) 
+/ double 39.549 39.98 21.01 21.92 1.88
+remark=vectorized
+loop.c:70:9: remark: vectorized loop (vectorization width: 2, interleaved count: 4) 

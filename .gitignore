@@ -28,5 +28,14 @@ go.work.sum
 .env
 
 # Editor/IDE
-# .idea/
-# .vscode/
+.idea/
+.vscode/
+plan.md
+.github/copilot-*
+
+# macOS
+.DS_Store
+
+# Build artifacts
+*.o
+*.cflags
