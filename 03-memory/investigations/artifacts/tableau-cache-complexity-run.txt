@@ -1,0 +1,22 @@
+benchmark=tableau-cache-complexity
+source=scripts/03-memory/cache-oblivious-tableau/tableau_bench.c
+problem=fill N x N tableau A(i,j)=f(A(i-1,j-1),A(i,j-1),A(i-1,j)) on diagonal layout 2N-1
+hardware=Apple M1 Pro (10-core CPU, ARM NEON)
+compiler=Apple clang version 16.0.0 (clang-1600.0.26.6)
+cflags=-O3 -DNDEBUG
+trials_per_config=3 (best of)
+element_size=4 bytes, working_set_bytes=(2N-1)*4
+
+method N cells best_ms avg_ms Mcells_per_s result
+iterative 512 261121 0.19 0.19 1374.3 7
+iterative 1024 1046529 0.76 0.77 1377.0 7
+iterative 2048 4190209 3.10 3.13 1351.7 7
+iterative 4096 16769025 12.64 12.72 1326.7 7
+iterative 8192 67092481 50.64 50.84 1324.9 7
+iterative 16384 268402689 201.70 201.91 1330.7 7
+recursive 512 261121 0.76 0.77 343.6 7
+recursive 1024 1046529 3.08 3.09 339.8 7
+recursive 2048 4190209 12.24 12.31 342.3 7
+recursive 4096 16769025 49.16 49.17 341.1 7
+recursive 8192 67092481 196.95 197.69 340.7 7
+recursive 16384 268402689 787.70 788.50 340.7 7

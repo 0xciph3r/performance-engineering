@@ -1,0 +1,25 @@
+experiment=postgres-logical-replication-cdc-lag
+image=postgres:16-alpine
+host_arch=arm64
+host_model=Apple M1 Pro (16-core GPU, Metal)
+source_config=wal_level=logical max_replication_slots=8 max_wal_senders=8
+
+scenario=steady-state
+batches=10 rows_per_batch=2000 interval_s=0.5
+loaded_rows=20000
+source_insert_window_ms=5995
+steady_max_replay_lag_ms=8
+steady_avg_replay_lag_ms=4.1
+drain_ms=73
+poll_samples_n=22
+poll_samples_ms=[87,392,681,962,1270,1568,1880,2184,2494,2798,3097,3401,3689,3984,4288,4577,4879,5176,5476,5769,6066,6369]
+
+scenario=burst
+burst_rows=50000
+source_insert_ms=149
+replay_lag_ms_after_commit=6
+rows_behind_at_commit=50000
+target_catchup_ms=399
+source_count=50000
+target_count=50000
+
