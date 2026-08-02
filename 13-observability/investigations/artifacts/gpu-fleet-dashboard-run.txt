@@ -1,0 +1,370 @@
+benchmark=gpu-fleet-dashboard (simulated DCGM metrics)
+description=DCGM-style metrics from a simulator on a machine with no NVIDIA GPU
+images=prom/prometheus:v2.53.0, grafana/grafana-oss:11.2.0, exporter=local Go build
+stack=docker compose in scripts/13-observability/gpu-fleet-dashboard/
+simulation=8 synthetic GPUs (4x A100, 3x H100, 1x A40), sine+noise values, scrape 5s
+
+--- exporter /metrics (raw sample, truncated) ---
+dcgm_gpu_utilization{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01"} 72.169
+dcgm_gpu_memory_used_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01"} 61200905325.192
+dcgm_gpu_memory_total_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01"} 85899345920.000
+dcgm_gpu_temperature_celsius{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01"} 67.051
+dcgm_gpu_power_usage_watts{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01"} 288.675
+dcgm_gpu_sm_clock_mhz{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01"} 1274.278
+dcgm_gpu_mem_clock_mhz{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01"} 946.265
+dcgm_gpu_fp16_tflops{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01"} 112.583
+dcgm_gpu_fp32_tflops{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01"} 14.073
+dcgm_gpu_pcie_rx_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01"} 38745286340.247
+dcgm_gpu_pcie_tx_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01"} 23247171804.148
+dcgm_gpu_nvlink_rx_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01",peer_uuid="GPU-9f1d2c3e-bbbb-4b0a-8f2d-1a2b3c4d5e6f",peer_gpu="NVIDIA A100-SXM4-80GB"} 30110061410.123
+dcgm_gpu_nvlink_tx_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01",peer_uuid="GPU-9f1d2c3e-bbbb-4b0a-8f2d-1a2b3c4d5e6f",peer_gpu="NVIDIA A100-SXM4-80GB"} 30110061410.123
+dcgm_gpu_nvlink_rx_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01",peer_uuid="GPU-9f1d2c3e-cccc-4b0a-8f2d-1a2b3c4d5e6f",peer_gpu="NVIDIA A100-SXM4-80GB"} 26083529570.123
+dcgm_gpu_nvlink_tx_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01",peer_uuid="GPU-9f1d2c3e-cccc-4b0a-8f2d-1a2b3c4d5e6f",peer_gpu="NVIDIA A100-SXM4-80GB"} 26083529570.123
+dcgm_gpu_nvlink_rx_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01",peer_uuid="GPU-9f1d2c3e-dddd-4b0a-8f2d-1a2b3c4d5e6f",peer_gpu="NVIDIA A100-SXM4-80GB"} 38163125090.123
+dcgm_gpu_nvlink_tx_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01",peer_uuid="GPU-9f1d2c3e-dddd-4b0a-8f2d-1a2b3c4d5e6f",peer_gpu="NVIDIA A100-SXM4-80GB"} 38163125090.123
+dcgm_gpu_nvlink_rx_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01",peer_uuid="GPU-5e7f8a9b-eeee-4b0a-8f2d-1a2b3c4d5e6f",peer_gpu="NVIDIA H100 SXM5 80GB"} 35478770530.123
+dcgm_gpu_nvlink_tx_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01",peer_uuid="GPU-5e7f8a9b-eeee-4b0a-8f2d-1a2b3c4d5e6f",peer_gpu="NVIDIA H100 SXM5 80GB"} 35478770530.123
+dcgm_gpu_nvlink_rx_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01",peer_uuid="GPU-5e7f8a9b-ffff-4b0a-8f2d-1a2b3c4d5e6f",peer_gpu="NVIDIA H100 SXM5 80GB"} 42189656930.123
+dcgm_gpu_nvlink_tx_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01",peer_uuid="GPU-5e7f8a9b-ffff-4b0a-8f2d-1a2b3c4d5e6f",peer_gpu="NVIDIA H100 SXM5 80GB"} 42189656930.123
+dcgm_gpu_nvlink_rx_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01",peer_uuid="GPU-5e7f8a9b-0000-4b0a-8f2d-1a2b3c4d5e6f",peer_gpu="NVIDIA H100 SXM5 80GB"} 22056997730.123
+dcgm_gpu_nvlink_tx_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01",peer_uuid="GPU-5e7f8a9b-0000-4b0a-8f2d-1a2b3c4d5e6f",peer_gpu="NVIDIA H100 SXM5 80GB"} 22056997730.123
+dcgm_gpu_nvlink_rx_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01",peer_uuid="GPU-1b2c3d4e-1111-4b0a-8f2d-1a2b3c4d5e6f",peer_gpu="NVIDIA A40"} 27425706850.123
+dcgm_gpu_nvlink_tx_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01",peer_uuid="GPU-1b2c3d4e-1111-4b0a-8f2d-1a2b3c4d5e6f",peer_gpu="NVIDIA A40"} 27425706850.123
+dcgm_gpu_utilization{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-bbbb-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01"} 40.926
+dcgm_gpu_memory_used_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-bbbb-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01"} 57173293018.665
+dcgm_gpu_memory_total_bytes{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-bbbb-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01"} 85899345920.000
+dcgm_gpu_temperature_celsius{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-bbbb-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01"} 54.518
+dcgm_gpu_power_usage_watts{gpu="NVIDIA A100-SXM4-80GB",model_name="A100",uuid="GPU-9f1d2c3e-bbbb-4b0a-8f2d-1a2b3c4d5e6f",driver_version="535.183.01"} 163.704
+
+--- prometheus targets ---
+dcgm-exporter up http://dcgm-exporter:9400/metrics
+
+--- fleet utilization avg (instant) ---
+[
+ {
+  "metric": {},
+  "value": [
+   1785596811.047,
+   "52.95399999999999"
+  ]
+ }
+]
+--- per-GPU utilization (instant) ---
+[
+ {
+  "metric": {
+   "__name__": "dcgm_gpu_utilization",
+   "cluster": "gpu-fleet",
+   "driver_version": "535.183.01",
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "instance": "dcgm-exporter:9400",
+   "job": "dcgm-exporter",
+   "model_name": "A100",
+   "uuid": "GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f"
+  },
+  "value": [
+   1785596811.432,
+   "79.001"
+  ]
+ },
+ {
+  "metric": {
+   "__name__": "dcgm_gpu_utilization",
+   "cluster": "gpu-fleet",
+   "driver_version": "535.183.01",
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "instance": "dcgm-exporter:9400",
+   "job": "dcgm-exporter",
+   "model_name": "A100",
+   "uuid": "GPU-9f1d2c3e-bbbb-4b0a-8f2d-1a2b3c4d5e6f"
+  },
+  "value": [
+   1785596811.432,
+   "48.053"
+  ]
+ },
+ {
+  "metric": {
+   "__name__": "dcgm_gpu_utilization",
+   "cluster": "gpu-fleet",
+   "driver_version": "535.183.01",
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "instance": "dcgm-exporter:9400",
+   "job": "dcgm-exporter",
+   "model_name": "A100",
+   "uuid": "GPU-9f1d2c3e-cccc-4b0a-8f2d-1a2b3c4d5e6f"
+  },
+  "value": [
+   1785596811.432,
+   "18.386"
+  ]
+ },
+ {
+  "metric": {
+   "__name__": "dcgm_gpu_utilization",
+   "cluster": "gpu-fleet",
+   "driver_version": "535.183.01",
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "instance": "dcgm-exporter:9400",
+   "job": "dcgm-exporter",
+   "model_name": "A100",
+   "uuid": "GPU-9f1d2c3e-dddd-4b0a-8f2d-1a2b3c4d5e6f"
+  },
+  "value": [
+   1785596811.432,
+   "62.865"
+  ]
+ },
+ {
+  "metric": {
+   "__name__": "dcgm_gpu_utilization",
+   "cluster": "gpu-fleet",
+   "driver_version": "550.54.15",
+   "gpu": "NVIDIA H100 SXM5 80GB",
+   "instance": "dcgm-exporter:9400",
+   "job": "dcgm-exporter",
+   "model_name": "H100",
+   "uuid": "GPU-5e7f8a9b-eeee-4b0a-8f2d-1a2b3c4d5e6f"
+  },
+  "value": [
+   1785596811.432,
+   "53.444"
+  ]
+ },
+ {
+  "metric": {
+   "__name__": "dcgm_gpu_utilization",
+   "cluster": "gpu-fleet",
+   "driver_version": "550.54.15",
+   "gpu": "NVIDIA H100 SXM5 80GB",
+   "instance": "dcgm-exporter:9400",
+   "job": "dcgm-exporter",
+   "model_name": "H100",
+   "uuid": "GPU-5e7f8a9b-ffff-4b0a-8f2d-1a2b3c4d5e6f"
+  },
+  "value": [
+   1785596811.432,
+   "85.172"
+  ]
+ },
+ {
+  "metric": {
+   "__name__": "dcgm_gpu_utilization",
+   "cluster": "gpu-fleet",
+   "driver_version": "550.54.15",
+   "gpu": "NVIDIA H100 SXM5 80GB",
+   "instance": "dcgm-exporter:9400",
+   "job": "dcgm-exporter",
+   "model_name": "H100",
+   "uuid": "GPU-5e7f8a9b-0000-4b0a-8f2d-1a2b3c4d5e6f"
+  },
+  "value": [
+   1785596811.432,
+   "31.571"
+  ]
+ },
+ {
+  "metric": {
+   "__name__": "dcgm_gpu_utilization",
+   "cluster": "gpu-fleet",
+   "driver_version": "535.183.01",
+   "gpu": "NVIDIA A40",
+   "instance": "dcgm-exporter:9400",
+   "job": "dcgm-exporter",
+   "model_name": "A40",
+   "uuid": "GPU-1b2c3d4e-1111-4b0a-8f2d-1a2b3c4d5e6f"
+  },
+  "value": [
+   1785596811.432,
+   "45.14"
+  ]
+ }
+]
+--- peak temperature (instant) ---
+[
+ {
+  "metric": {},
+  "value": [
+   1785596811.816,
+   "71.264"
+  ]
+ }
+]
+--- fleet power sum W (instant) ---
+[
+ {
+  "metric": {},
+  "value": [
+   1785596812.208,
+   "2138.271"
+  ]
+ }
+]
+--- GPUs reporting (instant) ---
+[
+ {
+  "metric": {},
+  "value": [
+   1785596812.608,
+   "8"
+  ]
+ }
+]
+--- memory used GiB by GPU (instant) ---
+[
+ {
+  "metric": {
+   "cluster": "gpu-fleet",
+   "driver_version": "535.183.01",
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "instance": "dcgm-exporter:9400",
+   "job": "dcgm-exporter",
+   "model_name": "A100",
+   "uuid": "GPU-9f1d2c3e-aaaa-4b0a-8f2d-1a2b3c4d5e6f"
+  },
+  "value": [
+   1785596812.972,
+   "57.51769963676203"
+  ]
+ },
+ {
+  "metric": {
+   "cluster": "gpu-fleet",
+   "driver_version": "535.183.01",
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "instance": "dcgm-exporter:9400",
+   "job": "dcgm-exporter",
+   "model_name": "A100",
+   "uuid": "GPU-9f1d2c3e-bbbb-4b0a-8f2d-1a2b3c4d5e6f"
+  },
+  "value": [
+   1785596812.972,
+   "53.651796677882786"
+  ]
+ },
+ {
+  "metric": {
+   "cluster": "gpu-fleet",
+   "driver_version": "535.183.01",
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "instance": "dcgm-exporter:9400",
+   "job": "dcgm-exporter",
+   "model_name": "A100",
+   "uuid": "GPU-9f1d2c3e-cccc-4b0a-8f2d-1a2b3c4d5e6f"
+  },
+  "value": [
+   1785596812.972,
+   "43.60956649084389"
+  ]
+ },
+ {
+  "metric": {
+   "cluster": "gpu-fleet",
+   "driver_version": "535.183.01",
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "instance": "dcgm-exporter:9400",
+   "job": "dcgm-exporter",
+   "model_name": "A100",
+   "uuid": "GPU-9f1d2c3e-dddd-4b0a-8f2d-1a2b3c4d5e6f"
+  },
+  "value": [
+   1785596812.972,
+   "73.25154301054589"
+  ]
+ },
+ {
+  "metric": {
+   "cluster": "gpu-fleet",
+   "driver_version": "550.54.15",
+   "gpu": "NVIDIA H100 SXM5 80GB",
+   "instance": "dcgm-exporter:9400",
+   "job": "dcgm-exporter",
+   "model_name": "H100",
+   "uuid": "GPU-5e7f8a9b-eeee-4b0a-8f2d-1a2b3c4d5e6f"
+  },
+  "value": [
+   1785596812.972,
+   "57.52582356318645"
+  ]
+ },
+ {
+  "metric": {
+   "cluster": "gpu-fleet",
+   "driver_version": "550.54.15",
+   "gpu": "NVIDIA H100 SXM5 80GB",
+   "instance": "dcgm-exporter:9400",
+   "job": "dcgm-exporter",
+   "model_name": "H100",
+   "uuid": "GPU-5e7f8a9b-ffff-4b0a-8f2d-1a2b3c4d5e6f"
+  },
+  "value": [
+   1785596812.972,
+   "76.87513439608738"
+  ]
+ },
+ {
+  "metric": {
+   "cluster": "gpu-fleet",
+   "driver_version": "550.54.15",
+   "gpu": "NVIDIA H100 SXM5 80GB",
+   "instance": "dcgm-exporter:9400",
+   "job": "dcgm-exporter",
+   "model_name": "H100",
+   "uuid": "GPU-5e7f8a9b-0000-4b0a-8f2d-1a2b3c4d5e6f"
+  },
+  "value": [
+   1785596812.972,
+   "24.01055355389137"
+  ]
+ },
+ {
+  "metric": {
+   "cluster": "gpu-fleet",
+   "driver_version": "535.183.01",
+   "gpu": "NVIDIA A40",
+   "instance": "dcgm-exporter:9400",
+   "job": "dcgm-exporter",
+   "model_name": "A40",
+   "uuid": "GPU-1b2c3d4e-1111-4b0a-8f2d-1a2b3c4d5e6f"
+  },
+  "value": [
+   1785596812.972,
+   "28.280663856109605"
+  ]
+ }
+]
+--- NVLink TX GB/s summed per GPU (instant) ---
+[
+ {
+  "metric": {
+   "gpu": "NVIDIA A100-SXM4-80GB"
+  },
+  "value": [
+   1785596813.363,
+   "670.0764708113328"
+  ]
+ },
+ {
+  "metric": {
+   "gpu": "NVIDIA H100 SXM5 80GB"
+  },
+  "value": [
+   1785596813.363,
+   "560.3483683520891"
+  ]
+ },
+ {
+  "metric": {
+   "gpu": "NVIDIA A40"
+  },
+  "value": [
+   1785596813.363,
+   "135.15885333651954"
+  ]
+ }
+]
+--- fleet util avg trend, 5m range (60 samples) ---
+samples=13 min=44.2 max=53.0 mean=48.3
+[46.6, 44.2, 45.9, 46.6, 45.0, 45.1, 48.6, 50.4, 49.7, 50.1, 52.2, 53.0, 50.7]
+--- grafana dashboard provisioning (api) ---
+uid=gpu-fleet title=GPU Fleet (simulated DCGM) panels=10 tags=['gpu', 'dcgm', 'simulated']

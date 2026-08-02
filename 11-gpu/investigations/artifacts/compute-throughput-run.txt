@@ -1,0 +1,30 @@
+benchmark=compute-throughput (GEMM + elementwise)
+source=scripts/11-gpu/compute-throughput/gemm.c
+hardware=Apple M1 Pro (10-core CPU, ARM NEON, AMX coprocessor) - no NVIDIA GPU present
+compiler=Apple clang version 16.0.0 (clang-1600.0.26.6)
+lib=Accelerate (vDSP + CBLAS sgemm, vecLib)
+precision=float32, gemm flops=2*n^3, elem bytes=n*12*repeats
+trials=best of {5,5,3,2,2} for n={128,256,512,1024,2048}, best of 3 for elem
+
+--- GEMM (C = A x B, FP32) ---
+gemm method=naive_ijk n=128 best_ms=1.8 gflops=2.32 rel_err=0
+gemm method=naive_ikj n=128 best_ms=0.2 gflops=27.24 rel_err=0
+gemm method=blas_sgemm n=128 best_ms=0.0 gflops=838.84 rel_err=0
+gemm method=naive_ijk n=256 best_ms=18.2 gflops=1.85 rel_err=0
+gemm method=naive_ikj n=256 best_ms=1.5 gflops=21.95 rel_err=0
+gemm method=blas_sgemm n=256 best_ms=0.0 gflops=1082.40 rel_err=0
+gemm method=naive_ijk n=512 best_ms=173.4 gflops=1.55 rel_err=0
+gemm method=naive_ikj n=512 best_ms=12.2 gflops=22.04 rel_err=0
+gemm method=blas_sgemm n=512 best_ms=0.2 gflops=1579.03 rel_err=0
+gemm method=naive_ijk n=1024 best_ms=1551.6 gflops=1.38 rel_err=0
+gemm method=naive_ikj n=1024 best_ms=99.0 gflops=21.70 rel_err=0
+gemm method=blas_sgemm n=1024 best_ms=1.2 gflops=1830.76 rel_err=0
+gemm method=naive_ijk n=2048 best_ms=26903.5 gflops=0.64 rel_err=0
+gemm method=naive_ikj n=2048 best_ms=820.1 gflops=20.95 rel_err=0
+gemm method=blas_sgemm n=2048 best_ms=11.8 gflops=1454.93 rel_err=0
+
+--- elementwise add/mul over n=2^20 floats x300 ---
+elem method=scalar op=add n=1048576 best_ms=39.38 gb_per_s=95.9
+elem method=vdsp op=add n=1048576 best_ms=26.62 gb_per_s=141.8
+elem method=scalar op=mul n=1048576 best_ms=39.92 gb_per_s=94.6
+elem method=vdsp op=mul n=1048576 best_ms=28.74 gb_per_s=131.4
